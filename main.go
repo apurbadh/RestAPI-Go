@@ -54,6 +54,11 @@ func updateTodo(res http.ResponseWriter, req *http.Request) {
 }
 
 func deleteTodo(res http.ResponseWriter, req *http.Request) {
+	res.Header().Set("Content-Type", "application/json")
+	var todo Todo
+	params := mux.Vars(req)
+	database.Delete(&todo, params["id"])
+	json.NewEncoder(res).Encode(todo)
 
 }
 
