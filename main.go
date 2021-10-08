@@ -43,6 +43,13 @@ func createTodo(res http.ResponseWriter, req *http.Request) {
 }
 
 func updateTodo(res http.ResponseWriter, req *http.Request) {
+	res.Header().Set("Content-Type", "application/json")
+	var todo Todo
+	params := mux.Vars(req)
+	database.First(&todo, params["id"])
+	json.NewDecoder(req.Body).Decode(&todo)
+	database.Save(&todo)
+	json.NewEncoder(res).Encode(todo)
 
 }
 
