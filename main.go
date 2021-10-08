@@ -15,11 +15,23 @@ type Todo struct {
 	Done bool   `json:"done"`
 }
 
-func todos(res http.ResponseWriter, req *http.Request) {
+func getTodos(res http.ResponseWriter, req *http.Request) {
 
 }
 
-func todo(res http.ResponseWriter, req *http.Request) {
+func getTodo(res http.ResponseWriter, req *http.Request) {
+
+}
+
+func createTodo(res http.ResponseWriter, req *http.Request) {
+
+}
+
+func updateTodo(res http.ResponseWriter, req *http.Request) {
+
+}
+
+func deleteTodo(res http.ResponseWriter, req *http.Request) {
 
 }
 
@@ -32,8 +44,11 @@ func main() {
 		fmt.Println("Database Connected Sucessfully")
 	}
 	database.AutoMigrate(&Todo{})
-	router.HandleFunc("/api/todo", todos).Methods("GET")
-	router.HandleFunc("/api/todo/{id}", todo).Methods("GET")
+	router.HandleFunc("/api/todo", getTodos).Methods("GET")
+	router.HandleFunc("/api/todo/{id}", getTodo).Methods("GET")
+	router.HandleFunc("/api/todo/new", createTodo).Methods("POST")
+	router.HandleFunc("/api/todo/{id}", updateTodo).Methods("PUT")
+	router.HandleFunc("/api/todo/{id}", deleteTodo).Methods("DELETE")
 	fmt.Println("Sever started at Port 8000")
 	http.ListenAndServe(":8000", router)
 }
