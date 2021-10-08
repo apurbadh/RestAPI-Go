@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -37,7 +38,7 @@ func deleteTodo(res http.ResponseWriter, req *http.Request) {
 
 func main() {
 	router := mux.NewRouter()
-	database, err := gorm.Open(sqlite.Open("database.db"), &gorm.Config{})
+	database, err = gorm.Open(sqlite.Open("database.db"), &gorm.Config{})
 	if err != nil {
 		panic("Database Connection Failed")
 	} else {
