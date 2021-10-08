@@ -39,7 +39,7 @@ func createTodo(res http.ResponseWriter, req *http.Request) {
 	var todo Todo
 	json.NewDecoder(req.Body).Decode(&todo)
 	database.Create(&todo)
-	json.NewEncoder(res).Encode(todo)
+	json.NewEncoder(res).Encode("Created Sucessfully")
 }
 
 func updateTodo(res http.ResponseWriter, req *http.Request) {
@@ -49,7 +49,7 @@ func updateTodo(res http.ResponseWriter, req *http.Request) {
 	database.First(&todo, params["id"])
 	json.NewDecoder(req.Body).Decode(&todo)
 	database.Save(&todo)
-	json.NewEncoder(res).Encode(todo)
+	json.NewEncoder(res).Encode("Updated Sucessfully")
 
 }
 
@@ -58,7 +58,7 @@ func deleteTodo(res http.ResponseWriter, req *http.Request) {
 	var todo Todo
 	params := mux.Vars(req)
 	database.Delete(&todo, params["id"])
-	json.NewEncoder(res).Encode(todo)
+	json.NewEncoder(res).Encode("Deleted Sucessfully")
 
 }
 
