@@ -11,21 +11,35 @@ import (
 )
 
 type Todo struct {
-	ID   int    `json:"id"`
+	gorm.Model
 	Task string `json:"task"`
 	Done bool   `json:"done"`
 }
 
-func getTodos(res http.ResponseWriter, req *http.Request) {
+var database *gorm.DB
+var err error
 
+func getTodos(res http.ResponseWriter, req *http.Request) {
+	res.Header().Set("Content-Type", "application/json")
+	var todos []Todo
+	database.Find(&todos)
+	json.NewEncoder(res).Encode(todos)
 }
 
 func getTodo(res http.ResponseWriter, req *http.Request) {
-
+	res.Header().Set("Content-Type", "application/json")
+	var todo Todo
+	params := mux.Vars(req)
+	database.First(&todo, params["id"])
+	json.NewEncoder(res).Encode(todo)
 }
 
 func createTodo(res http.ResponseWriter, req *http.Request) {
-
+	res.Header().Set("Content-Type", "application/json")
+	var todo Todo
+	json.NewDecoder(req.Body).Decode(&todo)
+	database.Create(&todo)
+	json.NewEncoder(res).Encode(todo)
 }
 
 func updateTodo(res http.ResponseWriter, req *http.Request) {
